@@ -1,45 +1,58 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {Container, Content, List, ListItem, Text, Left, Body, Right, Icon, Header, Footer, Button} from 'native-base';
 
 export default class App extends Component{
 
+  state = {
+    cars: [
+      {name: 'civic', color: 'white pearl'},
+      {name: 'dodge charger', color: 'black'},
+      {name: 'lambo', color: 'red'},
+    ]
+  }
+
+  renderRow(car, i){
+    return (
+      <ListItem key={i}>
+        <Body>
+          <Text>{car.name}</Text>
+          <Text note>{car.color}</Text>
+        </Body>
+        <Right>
+          <Icon name="ios-arrow-forward"/>
+        </Right>
+      </ListItem>
+    );
+  }
+
   render(){
     return (
-      <View style={styles.container}>
+      <Container>
+        <Header>
+          <Left>
+            <Icon style={{color: '#FFF'}} name="ios-arrow-back"/>
+          </Left>
+          <Body>
+            <Text>Header</Text>
+          </Body>
+          <Right>
+            <Icon name="more"/>
+          </Right>
+        </Header>
 
-        {/* flex 2 */}
-        <View style={styles.firstSide}>
-          <Text>First Side</Text>
-        </View>
+        <Content>
+          <List>
+            {this.state.cars.map((car, i)=>this.renderRow(car, i))}
+          </List>
+        </Content>
 
-        {/* flex 1 */}
-        <View style={styles.secondSide}>
-          <Text>Second Side</Text>
-        </View>
-
-      </View>
+        <Footer>
+          <Button full light>
+            <Text>Add to List</Text>
+          </Button>
+        </Footer>
+      </Container>
     )
   }
 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  firstSide: {
-    flex: 0.2,
-    backgroundColor: 'red',
-    padding: 20,
-    justifyContent: 'center',
-    alignSelf: 'center'
-  },
-  secondSide: {
-    flex: 7,
-    backgroundColor: 'yellow',
-    padding: 20,
-    justifyContent: 'flex-end',
-  }
-});
