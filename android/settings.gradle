@@ -1,0 +1,3 @@
+rootProject.name = 'KursusGel1'
+
+include ':app'
