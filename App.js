@@ -1,52 +1,35 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
+import {View, Text} from 'react-native';
 
 export default class App extends Component{
 
-  state = {
-    startups: ["tokopedia", "bukalapak", "dumbways"],
-    startup: ""
+  constructor(){
+    super();
+    console.log("1. Constructor");
   }
 
-  renderRow(startup, index){
-    return (
-      <View key={index} style={styles.listItem}>
-        <Text>{startup}</Text>
-      </View>
-    );
+  componentWillMount(){
+    console.log("2. componentWillMount");
   }
 
-  handleAdd(){
-    let newStartups = this.state.startups;
-    newStartups.push(this.state.startup);
-    this.setState({
-      startups: newStartups,
-      startup: ""
-    })
+  componentDidMount(){
+    console.log("3. componentDidMount");
+  }
+
+  componentWillReceiveProps(){
+    console.log("componentWillReceiveProps");
+  }
+
+  componentWillUnmount(){
+    console.log("4. componentWillUnmount");
   }
 
   render(){
     return (
       <View>
-        {this.state.startups.map((startup, index)=> this.renderRow(startup, index))}
-
-        <TextInput
-           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-           onChangeText={(startup) => this.setState({startup})}
-           value={this.state.startup}
-         />
-        <TouchableOpacity onPress={()=> this.handleAdd()}>
-          <Text>Add To List</Text>
-        </TouchableOpacity>
+        <Text>App.js</Text>
       </View>
     )
   }
 
 }
-
-const styles = StyleSheet.create({
-  listItem: {
-    padding: 10,
-    borderBottomWidth: 0.5
-  }
-});
