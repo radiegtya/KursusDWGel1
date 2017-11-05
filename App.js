@@ -1,58 +1,13 @@
-import React, {Component} from 'react';
-import {Container, Content, List, ListItem, Text, Left, Body, Right, Icon, Header, Footer, Button} from 'native-base';
+import { Navigation } from 'react-native-navigation';
 
-export default class App extends Component{
+import { registerScreens } from './screens';
 
-  state = {
-    cars: [
-      {name: 'civic', color: 'white pearl'},
-      {name: 'dodge charger', color: 'black'},
-      {name: 'lambo', color: 'red'},
-    ]
-  }
+registerScreens(); // this is where you register all of your app's screens
 
-  renderRow(car, i){
-    return (
-      <ListItem key={i}>
-        <Body>
-          <Text>{car.name}</Text>
-          <Text note>{car.color}</Text>
-        </Body>
-        <Right>
-          <Icon name="ios-arrow-forward"/>
-        </Right>
-      </ListItem>
-    );
-  }
-
-  render(){
-    return (
-      <Container>
-        <Header>
-          <Left>
-            <Icon style={{color: '#FFF'}} name="ios-arrow-back"/>
-          </Left>
-          <Body>
-            <Text>Header</Text>
-          </Body>
-          <Right>
-            <Icon name="more"/>
-          </Right>
-        </Header>
-
-        <Content>
-          <List>
-            {this.state.cars.map((car, i)=>this.renderRow(car, i))}
-          </List>
-        </Content>
-
-        <Footer>
-          <Button full light>
-            <Text>Add to List</Text>
-          </Button>
-        </Footer>
-      </Container>
-    )
-  }
-
-}
+// start the app
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'example.WelcomeScreen', // unique ID registered with Navigation.registerScreen
+    title: 'Welcome', // title of the screen as appears in the nav bar (optional)
+  },
+});
