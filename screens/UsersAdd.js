@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {Container, Content, Text, Button} from 'native-base';
 import t from 'tcomb-form-native';
+import axios from 'axios';
 
 const Form = t.form.Form;
 
 const UserForm = t.struct({
-  name: t.String,
+  username: t.String,
   password: t.String,
-  age: t.maybe(t.Number)
+  age: t.Number
 })
 
 export default class UsersAdd extends Component{
@@ -15,7 +16,10 @@ export default class UsersAdd extends Component{
   handleAdd(){
     const value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
-      alert(JSON.stringify(value)); // value here is an instance of Person
+      const self = this;
+      axios.post('http://192.168.1.100:5000/api/users', value).then(function(result){
+        self.props.navigator.pop();
+      })
     }
   }
 
