@@ -10,6 +10,13 @@ export default class WelcomeScreen extends Component{
     })
   }
 
+  handleGoToUsers(){
+    this.props.navigator.push({
+      screen: 'example.Users',
+      title: "Users"
+    })
+  }
+
   render(){
     return (
       <Container>
@@ -17,6 +24,9 @@ export default class WelcomeScreen extends Component{
           <Text>Welcome Screen</Text>
           <Button full success onPress={()=> this.handleGoToAbout()}>
             <Text>Go to About</Text>
+          </Button>
+          <Button full success onPress={()=> this.handleGoToUsers()}>
+            <Text>Go to Users</Text>
           </Button>
         </Content>
       </Container>
