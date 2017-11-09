@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Container, Content, List, ListItem, Text, Icon, Fab} from 'native-base';
 import axios from 'axios';
 
+import {apiUrl} from '../utils/config';
+
 export default class Users extends Component{
 
   state = {
@@ -10,7 +12,7 @@ export default class Users extends Component{
 
   componentDidMount(){
     const self = this;
-    axios.get('http://192.168.1.100:5000/api/users').then(function(result){
+    axios.get(`${apiUrl}/users`).then(function(result){
       self.setState({
         users: result.data
       })
@@ -24,9 +26,19 @@ export default class Users extends Component{
     })
   }
 
+  handleGoToUsersEdit(id){
+    this.props.navigator.push({
+      screen: 'example.UsersEdit',
+      title: "Edit User",
+      passProps: {
+        id: id
+      }
+    })
+  }
+
   renderRow(user){
     return (
-      <ListItem key={user.id}>
+      <ListItem key={user.id} onPress={()=> this.handleGoToUsersEdit(user.id)}>
         <Text>{user.username}</Text>
       </ListItem>
     )

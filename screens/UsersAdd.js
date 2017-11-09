@@ -3,6 +3,8 @@ import {Container, Content, Text, Button} from 'native-base';
 import t from 'tcomb-form-native';
 import axios from 'axios';
 
+import {apiUrl} from '../utils/config';
+
 const Form = t.form.Form;
 
 const UserForm = t.struct({
@@ -17,7 +19,7 @@ export default class UsersAdd extends Component{
     const value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
       const self = this;
-      axios.post('http://192.168.1.100:5000/api/users', value).then(function(result){
+      axios.post(`${apiUrl}/users`, value).then(function(result){
         self.props.navigator.pop();
       })
     }
