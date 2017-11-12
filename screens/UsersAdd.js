@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {Container, Content, Text, Button} from 'native-base';
 import t from 'tcomb-form-native';
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 import {apiUrl} from '../utils/config';
+import {allUsers} from '../actions';
 
 const Form = t.form.Form;
 
@@ -13,13 +15,14 @@ const UserForm = t.struct({
   age: t.Number
 })
 
-export default class UsersAdd extends Component{
+class UsersAdd extends Component{
 
   handleAdd(){
     const value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
       const self = this;
       axios.post(`${apiUrl}/users`, value).then(function(result){
+        self.props.dispatch(allUsers());
         self.props.navigator.pop();
       })
     }
@@ -42,3 +45,9 @@ export default class UsersAdd extends Component{
   }
 
 }
+
+const mapStateToProps = (state)=> ({
+
+});
+
+export default connect(mapStateToProps)(UsersAdd)

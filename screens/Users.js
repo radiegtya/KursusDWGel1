@@ -1,22 +1,26 @@
 import React, {Component} from 'react';
-import {Container, Content, List, ListItem, Text, Icon, Fab} from 'native-base';
+import {Container, Content, List, ListItem, Text, Icon, Fab, Spinner} from 'native-base';
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 import {apiUrl} from '../utils/config';
+import {allUsers} from '../actions';
 
-export default class Users extends Component{
+class Users extends Component{
 
   state = {
     users: []
   }
 
   componentDidMount(){
-    const self = this;
-    axios.get(`${apiUrl}/users`).then(function(result){
-      self.setState({
-        users: result.data
-      })
-    })
+    this.props.dispatch(allUsers());
+
+    // const self = this;
+    // axios.get(`${apiUrl}/users`).then(function(result){
+    //   self.setState({
+    //     users: result.data
+    //   })
+    // })
   }
 
   handleGoToUsersAdd(){
@@ -45,11 +49,21 @@ export default class Users extends Component{
   }
 
   render(){
+    if(this.props.data.loading){
+      return (
+        <Container>
+          <Content>
+            <Spinner color='blue' />
+          </Content>
+        </Container>
+      )
+    }
+
     return (
       <Container>
         <Content>
           <List>
-            {this.state.users.map((user)=> this.renderRow(user))}
+            {this.props.data.users.map((user)=> this.renderRow(user))}
           </List>
         </Content>
         <Fab
@@ -62,3 +76,9 @@ export default class Users extends Component{
     )
   }
 }
+
+const mapStateToProps = (state)=> ({
+  data: state.usersReducer
+})
+
+export default connect(mapStateToProps)(Users)
