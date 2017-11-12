@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Container, Content, Text, Button} from 'native-base';
 
-import '../utils/redux';
-
 export default class WelcomeScreen extends Component{
 
   handleGoToAbout(){
