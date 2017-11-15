@@ -2,6 +2,7 @@ import { Navigation } from 'react-native-navigation';
 
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import Home from './Home';
 import WelcomeScreen from './WelcomeScreen';
 import About from './About';
 import Users from './Users';
@@ -12,6 +13,7 @@ import UsersEdit from './UsersEdit';
 export function registerScreens(store, Provider) {
   Navigation.registerComponent('example.SignIn', () => SignIn);
   Navigation.registerComponent('example.SignUp', () => SignUp);
+  Navigation.registerComponent('example.Home', () => Home);
   Navigation.registerComponent('example.WelcomeScreen', () => WelcomeScreen);
   Navigation.registerComponent('example.About', () => About);
   Navigation.registerComponent('example.Users', () => Users, store, Provider);

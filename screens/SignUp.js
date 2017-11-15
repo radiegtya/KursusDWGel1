@@ -32,8 +32,8 @@ export default class SignUp extends Component{
       axios.post(`${apiUrl}/signup`, value).then((res)=>{
         self.setStorage(res.data).then(function(){
           self.props.navigator.resetTo({
-            screen: "example.WelcomeScreen",
-            title: "Welcome Screen"
+            screen: "example.Home",
+            title: "Instantgram"
           });
         });
       });

@@ -16,13 +16,15 @@ const SignInForm = t.struct({
 export default class SignIn extends Component{
 
   async componentWillMount(){
+    this.props.navigator.toggleTabs({ to: 'hidden', animated: false });
+
     //if token exists
     const token = await AsyncStorage.getItem('@dw:token');
 
     if(token){
       this.props.navigator.resetTo({
-        screen: "example.WelcomeScreen",
-        title: "Welcome Screen"
+        screen: "example.Home",
+        title: "Instantgram"
       })
     }
   }
@@ -50,8 +52,8 @@ export default class SignIn extends Component{
       axios.post(`${apiUrl}/signin`, value).then((res)=>{
         self.setStorage(res.data).then(function(){
           self.props.navigator.resetTo({
-            screen: "example.WelcomeScreen",
-            title: "Welcome Screen"
+            screen: "example.Home",
+            title: "Instantgram"
           });
         });
       });

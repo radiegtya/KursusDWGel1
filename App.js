@@ -6,10 +6,19 @@ import store from './store';
 
 registerScreens(store, Provider); // this is where you register all of your app's screens
 
-// start the app
-Navigation.startSingleScreenApp({
-  screen: {
-    screen: 'example.SignIn', // unique ID registered with Navigation.registerScreen
-    title: 'Sign In', // title of the screen as appears in the nav bar (optional)
-  },
+Navigation.startTabBasedApp({
+  tabs: [
+    {
+      screen: 'example.Home', // this is a registered name for a screen
+      icon: require('./img/icons/home-inactive.png'),
+      selectedIcon: require('./img/icons/home-active.png'), // iOS only
+      title: 'Instantgram'
+    },
+    {
+      screen: 'example.WelcomeScreen',
+      icon: require('./img/icons/home-inactive.png'),
+      selectedIcon: require('./img/icons/home-active.png'), // iOS only
+      title: 'WelcomeScreen'
+    }
+  ]
 });
