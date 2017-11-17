@@ -15,10 +15,28 @@ Navigation.startTabBasedApp({
       title: 'Instantgram'
     },
     {
-      screen: 'example.WelcomeScreen',
-      icon: require('./img/icons/home-inactive.png'),
-      selectedIcon: require('./img/icons/home-active.png'), // iOS only
-      title: 'WelcomeScreen'
-    }
+      screen: 'example.Search',
+      icon: require('./img/icons/search-inactive.png'),
+      selectedIcon: require('./img/icons/search-active.png'), // iOS only
+      title: 'Search'
+    },
+    {
+      screen: 'example.AddStory',
+      icon: require('./img/icons/add-inactive.png'),
+      selectedIcon: require('./img/icons/add-active.png'), // iOS only
+      title: 'Add Story'
+    },
+    {
+      screen: 'example.Follow',
+      icon: require('./img/icons/follow-inactive.png'),
+      selectedIcon: require('./img/icons/follow-active.png'), // iOS only
+      title: 'Follow'
+    },
+    {
+      screen: 'example.Profile',
+      icon: require('./img/icons/profile-inactive.png'),
+      selectedIcon: require('./img/icons/profile-active.png'), // iOS only
+      title: 'Profile'
+    },
   ]
 });
