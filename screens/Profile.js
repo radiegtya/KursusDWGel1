@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Container, Content, Text, Thumbnail, Button, H3} from 'native-base';
-import {View, Image, Dimensions} from 'react-native';
+import {View, Image, Dimensions, AsyncStorage} from 'react-native';
 
 let {height, width} = Dimensions.get('window');
 
@@ -25,6 +25,16 @@ export default class Search extends Component{
         />
       </View>
     )
+  }
+
+  handleSignOut(){
+    const self = this;
+    AsyncStorage.clear(()=>{
+      self.props.navigator.resetTo({
+        screen: "example.SignIn",
+        title: "Sign In"
+      })
+    });
   }
 
   render(){
@@ -55,6 +65,9 @@ export default class Search extends Component{
                 <View style={{flex: 1}}>
                   <Button light full small>
                     <Text>Edit Profile</Text>
+                  </Button>
+                  <Button light full small onPress={()=> this.handleSignOut()}>
+                    <Text>Sign Out</Text>
                   </Button>
                 </View>
               </View>
