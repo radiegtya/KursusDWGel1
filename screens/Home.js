@@ -25,14 +25,14 @@ class Home extends Component {
     this.props.dispatch(allPosts());
   }
 
-  renderRow({id, userId, imageUrl, likeCount, commentCount}){
+  renderRow({id, user, imageUrl, likeCount, commentCount}){
     return (
       <Card key={id}>
         <CardItem>
           <Left>
             <Thumbnail source={{uri: 'https://img.buzzfeed.com/buzzfeed-static/static/2014-04/tmp/webdr02/2/17/0e7cd6da3ce720d983515a9ab831a530-3.jpg?downsize=715:*&output-format=auto&output-quality=auto'}} />
             <Body>
-              <Text>{userId}</Text>
+              <Text>{user.username}</Text>
             </Body>
           </Left>
         </CardItem>
