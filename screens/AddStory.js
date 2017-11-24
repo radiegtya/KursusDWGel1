@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {AsyncStorage} from 'react-native';
 
 import {apiUrl} from '../utils/config';
-import {allPosts} from '../actions';
+import {allPosts, myPosts} from '../actions';
 
 class AddStory extends Component{
 
@@ -16,7 +16,8 @@ class AddStory extends Component{
         title: 'Select Media',
         storageOptions: {
           skipBackup: true,
-          path: 'images'
+          path: 'images',
+          quality: 0.3
         }
       };
 
@@ -33,7 +34,7 @@ class AddStory extends Component{
           console.log('User tapped custom button: ', response.customButton);
         }
         else {
-          let source = { uri: response.uri };
+          // let source = { uri: response.uri };
 
           resolve(response);
 
@@ -48,19 +49,8 @@ class AddStory extends Component{
   // id, user, imageUrl, likeCount, commentCount
   async handleAddPost(){
     const response = await this.showImagePicker();
-    console.log(response);
 
     const userId = await AsyncStorage.getItem('@dw:userId');
-
-    // const doc = {
-    //   userId: userId,
-    //   imageUrl: "https://de7i3bh7bgh0d.cloudfront.net/2016/07/05/16/50/17/0ce17b10-565d-4284-a9d0-617d26ee339b/VizBlog_OnePiece.jpg",
-    //   likeCount: 0,
-    //   commentCount: 0,
-    // }
-    //
-    // const res = await axios.post(`${apiUrl}/posts`, doc);
-    // this.props.dispatch(allPosts());
 
     const photo = {
     	uri: response.uri,
@@ -70,15 +60,17 @@ class AddStory extends Component{
 
     const body = new FormData();
     body.append('photo', photo);
-    // body.append('userId', userId);
-    // body.append('title', 'A beautiful photo!')
+    body.append('userId', userId);
 
-    axios({
+    await axios({
     	method: 'post',
     	url: `${apiUrl}/posts`,
     	data: body,
     	headers: {'Content-Type': 'multipart/form-data'}
-    })
+    });
+
+    this.props.dispatch(allPosts());
+    this.props.dispatch(myPosts(userId));
   }
 
   render(){

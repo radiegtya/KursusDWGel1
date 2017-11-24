@@ -9,6 +9,13 @@ export function allPosts(){
   }
 }
 
+export function myPosts(userId){
+  return {
+    type: "MY_POSTS",
+    payload: axios.get(`${apiUrl}/posts?userId=${userId}`)
+  }
+}
+
 export function getPost(id){
   return {
     type: "GET_POST",

@@ -1,27 +1,41 @@
 import React, {Component} from 'react';
 import {Container, Content, Text, Thumbnail, Button, H3} from 'native-base';
 import {View, Image, Dimensions, AsyncStorage} from 'react-native';
+import {connect} from 'react-redux';
+
+import {myPosts} from '../actions';
 
 let {height, width} = Dimensions.get('window');
 
-export default class Search extends Component{
-
-  images = [
-    {id: "1", uri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"},
-    {id: "2", uri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"},
-    {id: "3", uri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"},
-  ]
+class Profile extends Component{
 
   user = {
     imageUri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"
   }
 
-  renderRow({id, uri}){
+  async componentDidMount(){
+    // AsyncStorage.getItem('@dw:userId').then((userId)=>{
+    //   this.props.dispatch(myPosts(userId))
+    // });
+
+    const userId = await AsyncStorage.getItem('@dw:userId');
+    this.props.dispatch(myPosts(userId));
+  }
+
+  renderRow({id, imageUrl}){
     return (
-      <View key={id} style={{flex: 1}}>
+
+      <View key={id} style={{
+        flex: 1,
+        minWidth: width/3,
+        width: width/3,
+        height: width/3,
+        maxHeight:width/3,
+        backgroundColor: '#CCC',
+      }}>
         <Image
           style={{width: width/3, height: width/3}}
-          source={{uri}}
+          source={{uri: imageUrl}}
         />
       </View>
     )
@@ -75,8 +89,9 @@ export default class Search extends Component{
 
           </View>
 
-          <View style={{flexDirection: 'row', flex: 1}}>
-            {this.images.map((image)=> this.renderRow(image))}
+
+          <View style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap', justifyContent: 'center'}}>
+            {this.props.data.myPosts.map((post)=> this.renderRow(post))}
           </View>
         </Content>
       </Container>
@@ -84,3 +99,9 @@ export default class Search extends Component{
   };
 
 }
+
+const mapStateToProps = (state)=>({
+  data: state.postsReducer
+});
+
+export default connect(mapStateToProps)(Profile);
