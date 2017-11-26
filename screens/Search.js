@@ -1,33 +1,43 @@
 import React, {Component} from 'react';
 import {Container, Content, Text, Header, Item, Icon, Input, Button} from 'native-base';
 import {View, Image, Dimensions} from 'react-native';
+import {connect} from 'react-redux';
+
+import {allPosts} from '../actions';
 
 let {height, width} = Dimensions.get('window');
 
-export default class Search extends Component{
+class Search extends Component{
+
+  componentDidMount(){
+    this.props.dispatch(allPosts());
+  }
 
   static navigatorStyle = {
     navBarHidden: true,
   };
 
-  images = [
-    {id: "1", uri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"},
-    {id: "2", uri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"},
-    {id: "3", uri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"},
-  ]
-
-  renderRow({id, uri}){
+  renderRow({id, imageUrl}){
     return (
-      <View key={id} style={{flex: 1}}>
+      <View key={id} style={{
+        flex: 1,
+        minWidth: width/3,
+        width: width/3,
+        height: width/3,
+        maxHeight:width/3,
+        backgroundColor: '#CCC',
+      }}>
         <Image
           style={{width: width/3, height: width/3}}
-          source={{uri}}
+          source={{uri: imageUrl}}
         />
       </View>
     )
   }
 
   render(){
+    const {posts} = this.props.data;
+
     return(
       <Container>
         <Header searchBar rounded>
@@ -38,8 +48,8 @@ export default class Search extends Component{
         </Header>
 
         <Content>
-          <View style={{flexDirection: 'row', flex: 1}}>
-            {this.images.map((image)=> this.renderRow(image))}
+          <View  style={{flexDirection: 'row', flex: 1, flexWrap: 'wrap', justifyContent: 'center'}}>
+            {posts.map((post)=> this.renderRow(post))}
           </View>
         </Content>
       </Container>
@@ -47,3 +57,9 @@ export default class Search extends Component{
   };
 
 }
+
+const mapStateToProps = (state)=>({
+  data: state.postsReducer
+});
+
+export default connect(mapStateToProps)(Search);

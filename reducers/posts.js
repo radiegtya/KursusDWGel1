@@ -3,6 +3,7 @@ const initialState = {
   posts: [],
   myPosts: [],
   post: {},
+  postCount: {},
   error: "",
 };
 
@@ -33,6 +34,15 @@ export default function postsReducer(state = initialState, action){
       state = {...state, post: action.payload.data, loading: false};
       break;
     case "GET_POST_REJECTED":
+      state = {...state, error: action.payload};
+      break;
+    case "ALL_POSTS_COUNT_PENDING":
+      state = {...state, loading: true};;
+      break;
+    case "ALL_POSTS_COUNT_FULFILLED":
+      state = {...state, postCount: action.payload.data, loading: false};
+      break;
+    case "ALL_POSTS_COUNT_REJECTED":
       state = {...state, error: action.payload};
       break;
     default:

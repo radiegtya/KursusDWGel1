@@ -22,3 +22,11 @@ export function getPost(id){
     payload: axios.get(`${apiUrl}/posts/${id}`)
   }
 }
+
+//get all posts count by userId (loggedIn user)
+export function allPostsCount(userId){
+  return {
+    type: "ALL_POSTS_COUNT",
+    payload: axios.get(`${apiUrl}/posts/count/${userId}`)
+  }
+}
