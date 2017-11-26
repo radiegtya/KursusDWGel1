@@ -2,10 +2,10 @@ import axios from 'axios';
 
 import {apiUrl} from '../utils/config';
 
-export function allPosts(){
+export function allPosts(queryString=""){
   return {
     type: "ALL_POSTS",
-    payload: axios.get(`${apiUrl}/posts`)
+    payload: axios.get(`${apiUrl}/posts/${queryString}`)
   }
 }
 

@@ -136,7 +136,7 @@ class Profile extends Component{
               <View style={{flex: 1}}>
                 <View style={{flex: 1, flexDirection: 'row', marginBottom: 10}}>
                   <View style={{flex: 1}}>
-                    <H3>{postCount.count}</H3>
+                    <H3>{postCount.count + ""}</H3>
                     <Text note>posts</Text>
                   </View>
                   {/*

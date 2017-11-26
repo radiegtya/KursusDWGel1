@@ -9,7 +9,15 @@ let {height, width} = Dimensions.get('window');
 
 class Search extends Component{
 
+  state = {
+    text: ""
+  }
+
   componentDidMount(){
+    if(this.state.text){
+
+    }
+
     this.props.dispatch(allPosts());
   }
 
@@ -43,7 +51,14 @@ class Search extends Component{
         <Header searchBar rounded>
           <Item>
             <Icon name="ios-search" />
-            <Input placeholder="Search" />
+            <Input
+              placeholder="Search by Tag"
+              onChangeText={(text) => {
+                this.setState({text})
+                this.props.dispatch(allPosts(`?text=${text}`))
+              }}
+              value={this.state.text}
+            />
           </Item>
         </Header>
 
