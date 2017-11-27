@@ -7,6 +7,7 @@ import Search from './Search';
 import AddStory from './AddStory';
 import Follow from './Follow';
 import Profile from './Profile';
+import Comment from './Comment';
 // import WelcomeScreen from './WelcomeScreen';
 // import About from './About';
 // import Users from './Users';
@@ -22,6 +23,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('example.AddStory', () => AddStory, store, Provider);
   Navigation.registerComponent('example.Follow', () => Follow, store, Provider);
   Navigation.registerComponent('example.Profile', () => Profile, store, Provider);
+  Navigation.registerComponent('example.Comment', () => Comment, store, Provider);
   // Navigation.registerComponent('example.WelcomeScreen', () => WelcomeScreen);
   // Navigation.registerComponent('example.About', () => About);
   // Navigation.registerComponent('example.Users', () => Users, store, Provider);

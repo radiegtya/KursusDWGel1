@@ -25,6 +25,16 @@ class Home extends Component {
     this.props.dispatch(allPosts());
   }
 
+  handleGoToComment(postId){
+    this.props.navigator.push({
+      screen: "example.Comment",
+      title: "Comments",
+      passProps: {
+        postId
+      }
+    });
+  }
+
   renderRow({id, user, imageUrl, likeCount, commentCount}){
     return (
       <Card key={id}>
@@ -46,8 +56,8 @@ class Home extends Component {
             <Button transparent>
               <Icon name="heart" />
             </Button>
-            <Button transparent>
-              <Icon name="chatbubbles" />
+            <Button transparent onPress={()=>this.handleGoToComment(id)}>
+              <Icon name="chatbubbles"/>
             </Button>
           </Left>
           <Body/>
