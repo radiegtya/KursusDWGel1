@@ -5,7 +5,7 @@ import t from 'tcomb-form-native';
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 
-import {allComments} from '../actions';
+import {allComments, allPosts} from '../actions';
 import {apiUrl} from '../utils/config';
 
 const Form = t.form.Form;
@@ -45,6 +45,7 @@ class Comment extends Component{
 
       await axios.post(`${apiUrl}/comments`, doc);
       this.props.dispatch(allComments(postId));
+      this.props.dispatch(allPosts());
     }
   }
 

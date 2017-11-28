@@ -12,10 +12,6 @@ let {height, width} = Dimensions.get('window');
 
 class Profile extends Component{
 
-  user = {
-    imageUri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg"
-  }
-
   async componentDidMount(){
     // AsyncStorage.getItem('@dw:userId').then((userId)=>{
     //   this.props.dispatch(myPosts(userId))
@@ -28,6 +24,8 @@ class Profile extends Component{
   }
 
   renderRow({id, imageUrl}){
+    const profilePicture = imageUrl && imageUrl != ""? imageUrl: "https://d30y9cdsu7xlg0.cloudfront.net/png/411045-200.png";
+
     return (
 
       <View key={id} style={{
@@ -40,7 +38,7 @@ class Profile extends Component{
       }}>
         <Image
           style={{width: width/3, height: width/3}}
-          source={{uri: imageUrl}}
+          source={{uri: profilePicture}}
         />
       </View>
     )
@@ -128,7 +126,7 @@ class Profile extends Component{
 
             {/* Profile */}
             <TouchableOpacity onPress={()=> this.handleChangeProfile()} style={{flex: 1, marginRight: 15}}>
-              <Thumbnail large source={{ uri: user.profilePicture }} />
+              <Thumbnail large source={{ uri: user.profilePicture? user.profilePicture: "https://d30y9cdsu7xlg0.cloudfront.net/png/411045-200.png" }} />
               <Text>Edit Profile</Text>
             </TouchableOpacity>
 

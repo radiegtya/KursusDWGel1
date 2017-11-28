@@ -5,6 +5,7 @@ import t from 'tcomb-form-native';
 import axios from 'axios';
 
 import {apiUrl} from '../utils/config';
+import {allFollows} from '../actions';
 
 const Form = t.form.Form;
 
@@ -35,6 +36,14 @@ export default class SignUp extends Component{
             screen: "example.Home",
             title: "Instantgram"
           });
+        });
+
+        //add notification to follow
+        axios.post(`${apiUrl}/follows`, {
+          userId: res.data.userId,
+          activity: `is on Instantgram`
+        }).then(()=>{
+          this.props.dispatch(allFollows());
         });
       });
     }

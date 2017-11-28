@@ -1,39 +1,25 @@
 import React, {Component} from 'react';
 import {List, ListItem, Left, Body, Right, Thumbnail, Text, Button} from 'native-base';
+import {connect} from 'react-redux';
 
-export default class You extends Component{
+import {allFollows} from '../actions';
 
-  followers= [
-    {
-      id: "1",
-      user: {
-        imageUri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg",
-        username: "Meta"
-      },
-      text: "started following you",
-      createdAt: "1m"
-    },
-    {
-      id: "2",
-      user: {
-        imageUri: "https://pbs.twimg.com/profile_images/435306281369210880/cej2q6hE.jpeg",
-        username: "Dian"
-      },
-      text: "started following you",
-      createdAt: "2m"
-    },
-  ]
+class You extends Component{
 
-  renderRow(follower){
+  componentDidMount(){
+    this.props.dispatch(allFollows());
+  }
+
+  renderRow({id, activity, user, postId, createdAt}){
     return (
-      <ListItem key={follower.id} avatar>
+      <ListItem key={id} avatar>
         <Left>
-          <Thumbnail source={{ uri: follower.user.imageUri }} />
+          <Thumbnail source={{ uri: user.profilePicture? user.profilePicture: "https://d30y9cdsu7xlg0.cloudfront.net/png/411045-200.png" }} />
         </Left>
         <Body>
-          <Text>{follower.user.username}</Text>
-          <Text note>{follower.text}</Text>
-          <Text note>{follower.createdAt}</Text>
+          <Text>{user.username}</Text>
+          <Text note>{activity}</Text>
+          <Text note>{createdAt}</Text>
         </Body>
         <Right>
           <Button primary small>
@@ -45,11 +31,19 @@ export default class You extends Component{
   }
 
   render(){
+    const {follows} = this.props.data;
+
     return (
       <List style={{marginTop: 10}}>
-        {this.followers.map((follower)=> this.renderRow(follower))}
+        {follows.map((follow)=> this.renderRow(follow))}
       </List>
     )
   }
 
 }
+
+const mapStateToProps = (state)=>({
+  data: state.followsReducer
+});
+
+export default connect(mapStateToProps)(You)

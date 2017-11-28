@@ -26,6 +26,8 @@ class Search extends Component{
   };
 
   renderRow({id, imageUrl}){
+    const picture = imageUrl && imageUrl != ""? imageUrl: "https://d30y9cdsu7xlg0.cloudfront.net/png/411045-200.png";
+
     return (
       <View key={id} style={{
         flex: 1,
@@ -37,7 +39,7 @@ class Search extends Component{
       }}>
         <Image
           style={{width: width/3, height: width/3}}
-          source={{uri: imageUrl}}
+          source={{uri: picture}}
         />
       </View>
     )

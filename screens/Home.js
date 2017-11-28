@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import {Image, AsyncStorage} from 'react-native';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 import {allPosts} from '../actions';
+import {apiUrl} from '../utils/config';
 
 class Home extends Component {
 
@@ -35,7 +37,23 @@ class Home extends Component {
     });
   }
 
-  renderRow({id, user, imageUrl, likeCount, commentCount}){
+  async handleLike(id, likeCount = 0){
+    await axios.patch(`${apiUrl}/posts/${id}`, {likeCount: likeCount + 1});
+    this.props.dispatch(allPosts());
+  }
+
+  renderComment(comment){
+    return (
+      <CardItem key={comment._id}>
+        <Text>{comment.user.username}</Text>
+        <Text note>{comment.text}</Text>
+      </CardItem>
+    )
+  }
+
+  renderRow({id, user, imageUrl, likeCount, commentCount, comments}){
+    const picture = imageUrl && imageUrl != ""? imageUrl: "https://d30y9cdsu7xlg0.cloudfront.net/png/411045-200.png";
+
     return (
       <Card key={id}>
         <CardItem>
@@ -48,12 +66,12 @@ class Home extends Component {
         </CardItem>
         <CardItem cardBody>
           <Image source={{
-            uri: imageUrl
+            uri: picture
           }} style={{height: 200, width: null, flex: 1}}/>
         </CardItem>
         <CardItem>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={()=> this.handleLike(id, likeCount)}>
               <Icon name="heart" />
             </Button>
             <Button transparent onPress={()=>this.handleGoToComment(id)}>
@@ -65,10 +83,7 @@ class Home extends Component {
         <CardItem>
           <Text>{likeCount} likes</Text>
         </CardItem>
-        <CardItem>
-          <Text>Someone </Text>
-          <Text note>Hi...</Text>
-        </CardItem>
+        {comments.map(comment=> this.renderComment(comment))}
       </Card>
     )
   }
