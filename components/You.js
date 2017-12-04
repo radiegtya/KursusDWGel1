@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import {List, ListItem, Left, Body, Right, Thumbnail, Text, Button} from 'native-base';
 import {connect} from 'react-redux';
+import {AsyncStorage} from 'react-native';
+import axios from 'axios';
 
-import {allFollows} from '../actions';
+import {allNotifications} from '../actions';
+import {apiUrl} from '../utils/config';
+import FollowButton from './FollowButton';
 
 class You extends Component{
 
   componentDidMount(){
-    this.props.dispatch(allFollows());
+    this.props.dispatch(allNotifications());
   }
 
-  renderRow({id, activity, user, postId, createdAt}){
+  renderRow({id, activity, userId, user, postId, createdAt}){
     return (
       <ListItem key={id} avatar>
         <Left>
@@ -22,20 +26,18 @@ class You extends Component{
           <Text note>{createdAt}</Text>
         </Body>
         <Right>
-          <Button primary small>
-            <Text>Follow</Text>
-          </Button>
+          <FollowButton followedId={userId}/>
         </Right>
       </ListItem>
     )
   }
 
   render(){
-    const {follows} = this.props.data;
+    const {notifications} = this.props.data;
 
     return (
       <List style={{marginTop: 10}}>
-        {follows.map((follow)=> this.renderRow(follow))}
+        {notifications.map((notification)=> this.renderRow(notification))}
       </List>
     )
   }
@@ -43,7 +45,7 @@ class You extends Component{
 }
 
 const mapStateToProps = (state)=>({
-  data: state.followsReducer
+  data: state.notificationsReducer
 });
 
 export default connect(mapStateToProps)(You)

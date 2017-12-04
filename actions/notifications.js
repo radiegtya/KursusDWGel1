@@ -2,10 +2,10 @@ import axios from 'axios';
 
 import {apiUrl} from '../utils/config';
 
-export function getFollow(ownerId, followedId){
+export function allNotifications(){
   return {
-    type: "GET_FOLLOW",
-    payload: axios.get(`${apiUrl}/follows/${ownerId}/${followedId}`)
+    type: "ALL_NOTIFICATIONS",
+    payload: axios.get(`${apiUrl}/notifications`)
   }
 }
 

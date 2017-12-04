@@ -1,19 +1,20 @@
 const initialState = {
   loading: false,
   follows: [],
+  follow: {},
   error: "",
 };
 
 export default function followsReducer(state = initialState, action){
   switch (action.type) {
-    case "ALL_FOLLOWS_PENDING":
-      state = {...state, loading: true};
+    case "GET_FOLLOW_PENDING":
+      state = {...state, loading: true};;
       break;
-    case "ALL_FOLLOWS_FULFILLED":
-      state = {...state, loading: false, follows: action.payload.data};
+    case "GET_FOLLOW_FULFILLED":
+      state = {...state, follow: action.payload.data, loading: false};
       break;
-    case "ALL_FOLLOWS_REJECTED":
-      state = {...state, loading: false, error: action.payload};
+    case "GET_FOLLOW_REJECTED":
+      state = {...state, error: action.payload};
       break;
     default:
       state;
