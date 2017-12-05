@@ -7,7 +7,7 @@ import {AsyncStorage} from 'react-native';
 import t from 'tcomb-form-native';
 
 import {apiUrl} from '../utils/config';
-import {allPosts, myPosts} from '../actions';
+import {allPosts, myPosts, allPostsFollowed} from '../actions';
 
 const Form = t.form.Form;
 const FormSchema = t.struct({
@@ -85,6 +85,7 @@ class AddStory extends Component{
       });
 
       await this.props.dispatch(allPosts());
+      await this.props.dispatch(allPostsFollowed(userId));
       await this.props.dispatch(myPosts(userId));
       this.setState({text: ""});
       alert('Post Had been added');

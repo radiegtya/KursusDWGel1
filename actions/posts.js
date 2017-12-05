@@ -9,6 +9,13 @@ export function allPosts(queryString=""){
   }
 }
 
+export function allPostsFollowed(ownerId){
+  return {
+    type: "ALL_POSTS_FOLLOWED",
+    payload: axios.get(`${apiUrl}/posts/followed/${ownerId}`)
+  }
+}
+
 export function myPosts(userId){
   return {
     type: "MY_POSTS",

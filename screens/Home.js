@@ -4,7 +4,7 @@ import {Image, AsyncStorage} from 'react-native';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import {allPosts} from '../actions';
+import {allPostsFollowed} from '../actions';
 import {apiUrl} from '../utils/config';
 
 class Home extends Component {
@@ -23,8 +23,9 @@ class Home extends Component {
     }
   }
 
-  componentDidMount(){
-    this.props.dispatch(allPosts());
+  async componentDidMount(){
+    const ownerId = await AsyncStorage.getItem('@dw:userId');
+    this.props.dispatch(allPostsFollowed(ownerId));
   }
 
   handleGoToComment(postId){
@@ -39,7 +40,7 @@ class Home extends Component {
 
   async handleLike(id, likeCount = 0){
     await axios.patch(`${apiUrl}/posts/${id}`, {likeCount: likeCount + 1});
-    this.props.dispatch(allPosts());
+    this.props.dispatch(allPostsFollowed());
   }
 
   renderComment(comment){
@@ -92,7 +93,7 @@ class Home extends Component {
     return (
       <Container>
         <Content>
-          {this.props.data.posts.map(post=> this.renderRow(post))}
+          {this.props.data.postsFollowed.map(post=> this.renderRow(post))}
         </Content>
       </Container>
     )

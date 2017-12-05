@@ -1,6 +1,7 @@
 const initialState = {
   loading: false,
   posts: [],
+  postsFollowed: [],
   myPosts: [],
   post: {},
   postCount: {},
@@ -16,6 +17,15 @@ export default function postsReducer(state = initialState, action){
       state = {...state, loading: false, posts: action.payload.data};
       break;
     case "ALL_POSTS_REJECTED":
+      state = {...state, loading: false, error: action.payload};
+      break;
+    case "ALL_POSTS_FOLLOWED_PENDING":
+      state = {...state, loading: true};
+      break;
+    case "ALL_POSTS_FOLLOWED_FULFILLED":
+      state = {...state, loading: false, postsFollowed: action.payload.data};
+      break;
+    case "ALL_POSTS_FOLLOWED_REJECTED":
       state = {...state, loading: false, error: action.payload};
       break;
     case "MY_POSTS_PENDING":
